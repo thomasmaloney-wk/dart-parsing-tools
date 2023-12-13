@@ -1,4 +1,3 @@
-
 using Antlr4.Runtime.Misc;
 
 namespace DartSharp.Visitors

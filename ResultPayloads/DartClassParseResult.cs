@@ -1,4 +1,3 @@
-
 namespace DartSharp.ResultPayloads
 {
   class DartClassParseResult

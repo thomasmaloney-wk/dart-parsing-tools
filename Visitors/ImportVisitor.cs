@@ -1,4 +1,3 @@
-
 namespace DartSharp.Visitors
 {
   class ImportVisitor : DartVisitorWrapper<List<string>>
