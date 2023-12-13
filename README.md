@@ -30,3 +30,7 @@ dotnet run ~/some_dart_project/mocks.dart --explode
 And the program will create a directory `~/mock_files/` and write each mock class to its own file in there.
 
 Note: I'll add a way to specify an output directory probably very soon.
+
+## Disclaimer
+I wasn't initially expecting to put this on github and so documentation around using it or what each part does is not currently in an ideal state.
+I'll get around to making it a bit more user friendly and updating documentation and whatnot shortly though.
