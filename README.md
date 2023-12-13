@@ -1,4 +1,4 @@
-# dart-parsing-tools
+# Dart Parsing Tools
 Originally this project was going to be a testing ground for writing a Dart compiler, hence the solution name.
 I ended up wanting to go the route of making a general multipurpose program for working with dart parse trees.
 
