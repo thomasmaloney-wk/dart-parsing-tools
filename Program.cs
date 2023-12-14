@@ -5,25 +5,6 @@ namespace DartSharp
   class Program
   {
 
-    public static List<string> GetFiles(List<string> args)
-    {
-      Console.WriteLine($"Provided {args.Count} arguments");
-      var files = args.Where(arg => arg.EndsWith(".dart"));
-
-      var dirArgIdx = args.IndexOf("--dir");
-      if (dirArgIdx >= 0 && dirArgIdx < args.Count - 1)
-      {
-        Console.WriteLine($"Scanning directory: {args[dirArgIdx + 1]}");
-        var extraFiles = Directory.GetFiles(args[dirArgIdx + 1], "*.dart", SearchOption.AllDirectories);
-        if (extraFiles != null)
-        {
-          files = files.Union(extraFiles);
-        }
-      }
-
-      return files.ToList();
-    }
-
     public static int Main(string[] args)
     {
       var argParser = new ArgParser();
