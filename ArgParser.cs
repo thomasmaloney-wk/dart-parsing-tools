@@ -43,7 +43,7 @@ namespace DartSharp
     private const string helpFlag = "--help";
     private readonly List<ArgFlag> flags = new()
     {
-      new(helpFlag, "Displays available options."),
+      new(helpFlag, "Displays available options. (Note: if running with dotnet run, to use this flag you'll need to call dotnet run -- --help)"),
       new(dirFlag, "Consumes a directory instead of individual files and runs all dart files through a selected processor"),
       new(explodeFlag, "Writes all Mock classes to their own files"),
       new(lintFlag, "WIP: Will analyze a given dart file and notify if there are unused args for any functions"),
