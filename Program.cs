@@ -24,13 +24,6 @@ namespace DartSharp
       return files.ToList();
     }
 
-    enum ProgramMode
-    {
-      Garbage,
-      ExplodeMocks,
-      ArgumentUseLint
-    }
-
     public static int Main(string[] args)
     {
       var arguments = args.ToList();
