@@ -6,6 +6,8 @@ namespace DartSharp
     PrintHelp,
     ExplodeMocks,
     ArgumentUseLint,
+    ListMocks,
+    ListImports
   }
 
   readonly struct ArgFlag
@@ -41,6 +43,9 @@ namespace DartSharp
     private const string lintFlag = "--lint";
     private const string verboseFlag = "--verbose";
     private const string helpFlag = "--help";
+    private const string listMocksFlag = "--list-mocks";
+    private const string listImportsFlag = "--list-imports";
+
     private readonly List<ArgFlag> flags = new()
     {
       new(helpFlag, "Displays available options. (Note: if running with dotnet run, to use this flag you'll need to call dotnet run -- --help)"),
@@ -48,6 +53,8 @@ namespace DartSharp
       new(explodeFlag, "Writes all Mock classes to their own files"),
       new(lintFlag, "WIP: Will analyze a given dart file and notify if there are unused args for any functions"),
       new(verboseFlag, "Print extra logging info while running this program. Useful for debugging."),
+      new(listMocksFlag, "Print the Mock classes defined in the supplied files"),
+      new(listImportsFlag, "Print the import statements in the supplied files")
     };
 
     private List<string> flagParams => flags.Select((f) => f.Flag).ToList();
