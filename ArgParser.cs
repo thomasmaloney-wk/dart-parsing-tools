@@ -23,11 +23,13 @@ namespace DartSharp
   readonly struct ArgParserResult
   {
     public readonly IEnumerable<string> Files;
+    public readonly bool Verbose;
     public readonly ProgramMode Mode;
 
-    public ArgParserResult(ProgramMode mode, IEnumerable<string> files)
+    public ArgParserResult(ProgramMode mode, bool verbose, IEnumerable<string> files)
     {
       Mode = mode;
+      Verbose = verbose;
       Files = files;
     }
   }
@@ -37,13 +39,15 @@ namespace DartSharp
     private const string dirFlag = "--dir";
     private const string explodeFlag = "--explode";
     private const string lintFlag = "--lint";
+    private const string verboseFlag = "--verbose";
     private const string helpFlag = "--help";
     private readonly List<ArgFlag> flags = new()
     {
       new(helpFlag, "Displays available options."),
+      new(dirFlag, "Consumes a directory instead of individual files and runs all dart files through a selected processor"),
       new(explodeFlag, "Writes all Mock classes to their own files"),
       new(lintFlag, "WIP: Will analyze a given dart file and notify if there are unused args for any functions"),
-      new(dirFlag, "Consumes a directory instead of individual files and runs all dart files through a selected processor")
+      new(verboseFlag, "Print extra logging info while running this program. Useful for debugging."),
     };
 
     private List<string> flagParams => flags.Select((f) => f.Flag).ToList();
@@ -57,16 +61,23 @@ namespace DartSharp
     {
       var files = new List<string>();
       var mode = ProgramMode.PrintHelp;
+      var verbose = false;
 
       if (args.Length == 0)
       {
-        return new ArgParserResult(mode, files);
+        return new ArgParserResult(mode, verbose, files);
       }
 
       for (int i = 0; i < args.Length; i++)
       {
         if (args[i] == helpFlag)
-          return new ArgParserResult(ProgramMode.PrintHelp, files);
+          return new ArgParserResult(ProgramMode.PrintHelp, verbose, files);
+
+        if (args[i] == verboseFlag)
+        {
+          verbose = true;
+          continue;
+        }
 
         // todo: maybe write to stderr or something if more than one processor flag
         // is passed in?
@@ -99,10 +110,10 @@ namespace DartSharp
         mode = ProgramMode.Garbage;
         // Hacky way to indicate which arg was invalid to the caller
         files = new() { args[i] };
-        return new ArgParserResult(mode, files);
+        return new ArgParserResult(mode, verbose, files);
       }
 
-      return new ArgParserResult(mode, files);
+      return new ArgParserResult(mode, verbose, files);
     }
 
     public void PrintHelp()
