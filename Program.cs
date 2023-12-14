@@ -26,26 +26,31 @@ namespace DartSharp
 
     public static int Main(string[] args)
     {
-      var arguments = args.ToList();
-      var mode = ProgramMode.Garbage;
-      if (args.Length == 0)
+      var argParser = new ArgParser();
+      var argResults = argParser.ParseArguments(args);
+      var mode = argResults.Mode;
+      var files = argResults.Files;
+      var verbose = argResults.Verbose;
+
+      if (verbose)
       {
-        Console.WriteLine("Error: Please provide at least one file.");
+        Console.WriteLine("ArgParse Results:");
+        Console.WriteLine($"Mode: {argResults.Mode}");
+        Console.WriteLine($"Files: {argResults.Files.Aggregate("", (x, y) => x + ", " + y)}");
+      }
+
+      if (mode == ProgramMode.PrintHelp)
+      {
+        argParser.PrintHelp();
+        return 1;
+      }
+      else if (mode == ProgramMode.Garbage)
+      {
+        Console.WriteLine($"Invalid argument/file: {argResults.Files.First()}");
+        argParser.PrintHelp();
         return 1;
       }
 
-      if (args.Contains("--explode"))
-      {
-        arguments.Remove("--explode");
-        mode = ProgramMode.ExplodeMocks;
-      }
-      else if (args.Contains("--lint"))
-      {
-        arguments.Remove("--lint");
-        mode = ProgramMode.ArgumentUseLint;
-      }
-
-      var files = GetFiles(arguments);
       DartProcessor? processor = null;
       switch (mode)
       {
@@ -56,9 +61,8 @@ namespace DartSharp
           // Work in progress
           processor = new ParameterContainerTypeProcessor(files);
           break;
-        case ProgramMode.Garbage:
-          Console.WriteLine("Invalid mode");
-          return 1;
+        default:
+          break;
       }
 
       processor?.Process();
