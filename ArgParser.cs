@@ -100,6 +100,16 @@ namespace DartSharp
           continue;
         }
 
+        if (args[i] == listMocksFlag) {
+          mode = ProgramMode.ListMocks;
+          continue;
+        }
+
+        if (args[i] == listImportsFlag) {
+          mode = ProgramMode.ListImports;
+          continue;
+        }
+
         if (args[i] == dirFlag && i != args.Length - 1)
         {
           files = files.Union(GetFilesFromDirectory(args[++i])).ToList();
