@@ -49,7 +49,7 @@ namespace DartSharp
     private readonly List<ArgFlag> flags = new()
     {
       new(helpFlag, "Displays available options. (Note: if running with dotnet run, to use this flag you'll need to call dotnet run -- --help)"),
-      new(dirFlag, "Consumes a directory instead of individual files and runs all dart files through a selected processor"),
+      new(dirFlag, "Consumes a directory instead of individual files and runs all dart files through a selected processor. (Note: If your shell supports globs, you might not need to use this flag)"),
       new(explodeFlag, "Writes all Mock classes to their own files"),
       new(lintFlag, "WIP: Will analyze a given dart file and notify if there are unused args for any functions"),
       new(verboseFlag, "Print extra logging info while running this program. Useful for debugging."),
