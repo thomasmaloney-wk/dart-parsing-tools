@@ -33,5 +33,23 @@ namespace DartSharp.ArgumentHandling
                 Console.WriteLine($"  {flag.Flag,-20} {flag.Description}");
             }
         }
+
+        public static void PrintHelpV2()
+        {
+            var genericFlags = GenericFlags;
+            var processorFlags = ProcessorFlags;
+            Console.WriteLine("Usage: DartCompiler [processor] [arguments] [files]");
+            Console.WriteLine("  (or) dotnet run [processor] [arguments] [files]");
+            Console.WriteLine("Processors:");
+            foreach (var flag in processorFlags)
+            {
+                Console.WriteLine($"  {flag.Flag,-20} {flag.Description}");
+            }
+            Console.WriteLine("Arguments:");
+            foreach (var flag in genericFlags)
+            {
+                Console.WriteLine($"  {flag.Flag,-20} {flag.Description}");
+            }
+        }
     }
 }
