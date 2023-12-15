@@ -17,7 +17,7 @@ namespace DartSharp.ArgumentHandling
             UsesOutputFlag = usesOutputFlag;
         }
 
-        public TProcessor CreateProcessor(IEnumerable<string> files, string? outputParameter)
+        public TProcessor CreateProcessor(IEnumerable<string> files, string? outputParameter = null)
         {
             // Todo: add error handling for the somewhat hacky reflection.
             if (UsesOutputFlag && outputParameter != null)
