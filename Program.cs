@@ -42,6 +42,12 @@ namespace DartSharp
           // Work in progress
           processor = new ParameterContainerTypeProcessor(files);
           break;
+        case ProgramMode.ListMocks:
+          processor = new MockTypeDependenciesProcessor(files);
+          break;
+        case ProgramMode.ListImports:
+          processor = new ListImportsProcessor(files);
+          break;
         default:
           break;
       }
