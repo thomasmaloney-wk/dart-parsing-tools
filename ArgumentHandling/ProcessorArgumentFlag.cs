@@ -19,6 +19,7 @@ namespace DartSharp.ArgumentHandling
 
         public TProcessor CreateProcessor(IEnumerable<string> files, string? outputParameter)
         {
+            // Todo: add error handling for the somewhat hacky reflection.
             if (UsesOutputFlag && outputParameter != null)
             {
                 return (TProcessor)Activator.CreateInstance(typeof(TProcessor), files, outputParameter);
