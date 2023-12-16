@@ -14,7 +14,7 @@ namespace DartSharp.ArgumentHandling
         public bool IsOutputLocationDefined => GenericFlags.ContainsKey("-o");
         public string? Output => IsOutputLocationDefined ? GenericFlags["-o"].FirstOrDefault(string.Empty) : null;
 
-        private Func<IEnumerable<string>, string?, DartProcessor>? ProcessorFactory;
+        private Func<IEnumerable<string>, string?, DartProcessor?>? ProcessorFactory;
 
         /// <summary>
         /// Tries to define how to create the dart processor.
@@ -22,7 +22,7 @@ namespace DartSharp.ArgumentHandling
         /// </summary>
         /// <param name="processorFactory"></param>
         /// <returns></returns>
-        public bool TrySetProcessorFactory(Func<IEnumerable<string>, string?, DartProcessor> processorFactory)
+        public bool TrySetProcessorFactory(Func<IEnumerable<string>, string?, DartProcessor?> processorFactory)
         {
             if (ProcessorFactory != null) return false;
             ProcessorFactory = processorFactory;
