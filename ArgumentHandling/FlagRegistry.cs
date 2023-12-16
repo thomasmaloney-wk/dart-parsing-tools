@@ -25,17 +25,6 @@ namespace DartSharp.ArgumentHandling
 
         public static void PrintHelp()
         {
-            Console.WriteLine("Usage: DartCompiler [arguments] [files]");
-            Console.WriteLine("  (or) dotnet run [arguments] [files]");
-            Console.WriteLine("Arguments:");
-            foreach (var flag in Flags)
-            {
-                Console.WriteLine($"  {flag.Flag,-20} {flag.Description}");
-            }
-        }
-
-        public static void PrintHelpV2()
-        {
             var genericFlags = GenericFlags;
             var processorFlags = ProcessorFlags;
             Console.WriteLine("Usage: DartCompiler [processor] [arguments] [files]");
