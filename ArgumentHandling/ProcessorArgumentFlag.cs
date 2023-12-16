@@ -23,19 +23,13 @@ namespace DartSharp.ArgumentHandling
             UsesOutputFlag = usesOutputFlag;
         }
 
-        public TProcessor? CreateProcessor(IEnumerable<string> files, string? outputParameter = null)
-        {
-            // Todo: add error handling for the somewhat hacky reflection.
-            if (UsesOutputFlag && outputParameter != null)
-            {
-                return Activator.CreateInstance(typeof(TProcessor), files, outputParameter) as TProcessor;
-            }
-            return Activator.CreateInstance(typeof(TProcessor), files) as TProcessor;
-        }
-
         DartProcessor? IProcessorArgumentFlag.CreateProcessor(IEnumerable<string> files, string? outputParameter)
         {
-            return CreateProcessor(files, outputParameter: outputParameter);
+            if (UsesOutputFlag)
+            {
+                return ProcessorFactory.CreateProcessor<TProcessor>(files, outputParameter);
+            }
+            return ProcessorFactory.CreateProcessor<TProcessor>(files);
         }
     }
 }
