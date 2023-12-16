@@ -10,8 +10,6 @@ namespace DartSharp.ArgumentHandling
         public static CommandLineArgumentParsePayload ParseArguments(string[] args)
         {
             var files = new List<string>();
-            var genericFlagLookupMap = FlagRegistry.GenericFlags.ToDictionary(k => k.Flag, v => v);
-            var processorFlagLookupMap = FlagRegistry.ProcessorFlags.ToDictionary(k => k.Flag, v => v);
 
             var payload = new CommandLineArgumentParsePayload();
 
@@ -25,7 +23,7 @@ namespace DartSharp.ArgumentHandling
             {
                 var currentArg = args[i];
 
-                if (genericFlagLookupMap.TryGetValue(currentArg, out GenericArgumentFlag? genericFlag))
+                if (FlagRegistry.GenericFlagByFlagName.TryGetValue(currentArg, out GenericArgumentFlag? genericFlag))
                 {
                     var flagParams = new List<string>();
                     var paramCount = genericFlag.ParameterCount;
@@ -48,7 +46,7 @@ namespace DartSharp.ArgumentHandling
                     continue;
                 }
 
-                if (processorFlagLookupMap.TryGetValue(currentArg, out ArgumentFlag? pFlag))
+                if (FlagRegistry.ProcessorFlagByFlagName.TryGetValue(currentArg, out ArgumentFlag? pFlag))
                 {
                     // Attempt to cast to ProcessorArgumentFlag<TProcessor> dynamically
 

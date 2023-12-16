@@ -16,6 +16,9 @@ namespace DartSharp.ArgumentHandling
         // which would restrict what processor related flags we can register.
         public static readonly List<ArgumentFlag> ProcessorFlags = new();
 
+        public static Dictionary<string, GenericArgumentFlag> GenericFlagByFlagName => GenericFlags.ToDictionary(key => key.Flag, value => value);
+        public static Dictionary<string, ArgumentFlag> ProcessorFlagByFlagName => ProcessorFlags.ToDictionary(key => key.Flag, value => value);
+
         public static IEnumerable<ArgumentFlag> Flags => ProcessorFlags.Union(GenericFlags);
 
         public static void RegisterFlag<TProcessor>(string flag, string desc, bool usesOutputFlag = false) where TProcessor : DartProcessor
