@@ -58,7 +58,7 @@ namespace DartSharp.ArgumentHandling
                     if (!payload.TrySetProcessorFactory(processorFlag.CreateProcessor))
                     {
                         payload.Errors.Add($"Error: cannot set flag '{processorFlag.Flag}' as another process flag has been set already.");
-                        continue; ;
+                        continue;
                     }
                     continue;
                 }
