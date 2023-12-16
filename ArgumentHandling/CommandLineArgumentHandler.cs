@@ -53,23 +53,11 @@ namespace DartSharp.ArgumentHandling
                     continue;
                 }
 
-                if (FlagRegistry.ProcessorFlagByFlagName.TryGetValue(currentArg, out IProcessorArgumentFlag? argFlag))
+                if (FlagRegistry.ProcessorFlagByFlagName.TryGetValue(currentArg, out IProcessorArgumentFlag? processorFlag))
                 {
-                    // Attempt to cast to ProcessorArgumentFlag<TProcessor> dynamically
-
-                    // This in theory should never happen since argFlag must be an IProcessorArgumentFlag
-                    // to exist in FlagRegistry.ProcessorFlags.
-                    // But I'll leave this check in until I am comfortable with the command argument handling
-                    // rewrite.
-                    if (argFlag is not IProcessorArgumentFlag processorFlag)
-                    {
-                        payload.Errors.Add($"Error: Flag '{argFlag.Flag}' not associated with processor.");
-                        continue;
-                    }
-
                     if (!payload.TrySetProcessorFactory(processorFlag.CreateProcessor))
                     {
-                        payload.Errors.Add($"Error: cannot set flag '{argFlag.Flag}' as another process flag has been set already.");
+                        payload.Errors.Add($"Error: cannot set flag '{processorFlag.Flag}' as another process flag has been set already.");
                         continue; ;
                     }
                     continue;
