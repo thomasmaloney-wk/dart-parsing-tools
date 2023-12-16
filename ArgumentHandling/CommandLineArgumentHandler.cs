@@ -12,7 +12,6 @@ namespace DartSharp.ArgumentHandling
             var files = new List<string>();
             var genericFlagLookupMap = FlagRegistry.GenericFlags.ToDictionary(k => k.Flag, v => v);
             var processorFlagLookupMap = FlagRegistry.ProcessorFlags.ToDictionary(k => k.Flag, v => v);
-            var processorTypeLookupMap = FlagRegistry.ProcessorFlags.ToDictionary(k => (k as IProcessorArgumentFlag).ProcessorType, v => v);
 
             var payload = new CommandLineArgumentParsePayload();
 
