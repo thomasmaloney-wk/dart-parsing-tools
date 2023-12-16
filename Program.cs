@@ -29,6 +29,9 @@ namespace DartSharp
         {
           Console.WriteLine(error);
         }
+
+        // print a newline before printing help message to help let error messages stand out more
+        Console.WriteLine();
         FlagRegistry.PrintHelp();
         return 1;
       }
