@@ -2,16 +2,23 @@ namespace DartSharp.ArgumentHandling
 {
     class CommandLineArgumentHandler
     {
+        private static readonly CommandLineArgumentParsePayload payload = new();
         private static List<string> GetFilesFromDirectory(string directory)
         {
-            return Directory.GetFiles(directory, "*.dart", SearchOption.AllDirectories).ToList();
+            try
+            {
+                return Directory.GetFiles(directory, "*.dart", SearchOption.AllDirectories).ToList();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                payload.Errors.Add($"Error: Directory {directory} not found.");
+                return new();
+            }
         }
 
         public static CommandLineArgumentParsePayload ParseArguments(string[] args)
         {
             var files = new List<string>();
-
-            var payload = new CommandLineArgumentParsePayload();
 
             if (args.Length == 0)
             {
@@ -33,7 +40,7 @@ namespace DartSharp.ArgumentHandling
                         if (i + paramCount >= args.Length)
                         {
                             // Todo: implement better error handling
-                            payload.Errors.Add($"Error: '{genericFlag.Flag}' requires {paramCount} args but was only given {args.Length - i} args.");
+                            payload.Errors.Add($"Error: '{genericFlag.Flag}' requires {paramCount} args but was only given {args.Length - i - 1} args.");
                             continue;
                         }
 
@@ -85,6 +92,11 @@ namespace DartSharp.ArgumentHandling
             }
 
             payload.Files.AddRange(files);
+
+            if (!payload.IsProcessorFlagSet)
+            {
+                payload.Errors.Add("Error: Program requires processor flag");
+            }
 
             return payload;
         }
