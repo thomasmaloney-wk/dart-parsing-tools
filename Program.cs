@@ -16,8 +16,7 @@ namespace DartSharp
     public static int Main(string[] args)
     {
       RegisterFlags();
-      var argParserV2 = new CommandLineArgumentHandler();
-      var resultPayload = argParserV2.ParseArguments(args);
+      var resultPayload = CommandLineArgumentHandler.ParseArguments(args);
       if (resultPayload.ShowHelp)
       {
         FlagRegistry.PrintHelp();

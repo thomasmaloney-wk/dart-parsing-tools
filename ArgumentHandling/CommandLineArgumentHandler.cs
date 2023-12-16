@@ -2,12 +2,12 @@ namespace DartSharp.ArgumentHandling
 {
     class CommandLineArgumentHandler
     {
-        private List<string> GetFilesFromDirectory(string directory)
+        private static List<string> GetFilesFromDirectory(string directory)
         {
             return Directory.GetFiles(directory, "*.dart", SearchOption.AllDirectories).ToList();
         }
 
-        public CommandLineArgumentParsePayload ParseArguments(string[] args)
+        public static CommandLineArgumentParsePayload ParseArguments(string[] args)
         {
             var files = new List<string>();
             var genericFlagLookupMap = FlagRegistry.GenericFlags.ToDictionary(k => k.Flag, v => v);
