@@ -82,7 +82,7 @@ namespace DartSharp.ArgumentHandling
                 }
 
                 // If we reach here, an invalid file or argument has been passed in
-                payload.Errors.Add($"Unrecognized command `{currentArg}");
+                payload.Errors.Add($"Unrecognized command `{currentArg}`");
                 return payload;
             }
 
