@@ -4,13 +4,19 @@ namespace DartSharp.ArgumentHandling
   /// Represents a program flag that is not associated with a specific
   /// <c>DartProcessor</c> class.
   /// </summary>
-  class GenericArgumentFlag : ArgumentFlag
+  class GenericArgumentFlag : IArgumentFlag
   {
     public int ParameterCount { get; }
-    public override bool IsProcessorFlag => false;
+    public bool IsProcessorFlag => false;
 
-    public GenericArgumentFlag(string flag, string desc, int parameterCount = 0) : base(flag, desc)
+    public string Flag { get; }
+
+    public string Description { get; }
+
+    public GenericArgumentFlag(string flag, string desc, int parameterCount = 0)
     {
+      Flag = flag;
+      Description = desc;
       ParameterCount = parameterCount;
     }
   }

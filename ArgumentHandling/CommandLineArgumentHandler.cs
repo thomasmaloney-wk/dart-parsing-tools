@@ -53,7 +53,7 @@ namespace DartSharp.ArgumentHandling
                     continue;
                 }
 
-                if (FlagRegistry.ProcessorFlagByFlagName.TryGetValue(currentArg, out ArgumentFlag? argFlag))
+                if (FlagRegistry.ProcessorFlagByFlagName.TryGetValue(currentArg, out IProcessorArgumentFlag? argFlag))
                 {
                     // Attempt to cast to ProcessorArgumentFlag<TProcessor> dynamically
 

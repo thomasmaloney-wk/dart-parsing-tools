@@ -12,14 +12,12 @@ namespace DartSharp.ArgumentHandling
             new("-o", "Writes output to specified directory for process commands that support it.", parameterCount: 1)
         };
 
-        // Specify list type ArgumentFlag instead of ProcessorArgumentFlag since ProcessorArgumentFlag requires a generic type
-        // which would restrict what processor related flags we can register.
-        public static readonly List<ArgumentFlag> ProcessorFlags = new();
+        public static readonly List<IProcessorArgumentFlag> ProcessorFlags = new();
 
         public static Dictionary<string, GenericArgumentFlag> GenericFlagByFlagName => GenericFlags.ToDictionary(key => key.Flag, value => value);
-        public static Dictionary<string, ArgumentFlag> ProcessorFlagByFlagName => ProcessorFlags.ToDictionary(key => key.Flag, value => value);
+        public static Dictionary<string, IProcessorArgumentFlag> ProcessorFlagByFlagName => ProcessorFlags.ToDictionary(key => key.Flag, value => value);
 
-        public static IEnumerable<ArgumentFlag> Flags => ProcessorFlags.Union(GenericFlags);
+        public static IEnumerable<IArgumentFlag> Flags => ProcessorFlags.Select(flag => flag as IArgumentFlag).Union(GenericFlags);
 
         public static void RegisterFlag<TProcessor>(string flag, string desc, bool usesOutputFlag = false) where TProcessor : DartProcessor
         {

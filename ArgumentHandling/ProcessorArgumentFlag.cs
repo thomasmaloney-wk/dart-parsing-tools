@@ -2,7 +2,7 @@ using DartSharp.Processors;
 
 namespace DartSharp.ArgumentHandling
 {
-    interface IProcessorArgumentFlag
+    interface IProcessorArgumentFlag : IArgumentFlag
     {
         public Type ProcessorType { get; }
 
@@ -12,14 +12,20 @@ namespace DartSharp.ArgumentHandling
     /// Represents a program flag associated with a specific <c>DartProcessor</c>.
     /// </summary>
     /// <typeparam name="TProcessor">A subtype of <c>DartProcessor</c></typeparam>
-    class ProcessorArgumentFlag<TProcessor> : ArgumentFlag, IProcessorArgumentFlag where TProcessor : DartProcessor
+    class ProcessorArgumentFlag<TProcessor> : IProcessorArgumentFlag where TProcessor : DartProcessor
     {
         public bool UsesOutputFlag { get; }
         public Type ProcessorType => typeof(TProcessor);
-        public override bool IsProcessorFlag => true;
+        public bool IsProcessorFlag => true;
 
-        public ProcessorArgumentFlag(string flag, string desc, bool usesOutputFlag = false) : base(flag, desc)
+        public string Flag { get; }
+
+        public string Description { get; }
+
+        public ProcessorArgumentFlag(string flag, string desc, bool usesOutputFlag = false)
         {
+            Flag = flag;
+            Description = desc;
             UsesOutputFlag = usesOutputFlag;
         }
 
