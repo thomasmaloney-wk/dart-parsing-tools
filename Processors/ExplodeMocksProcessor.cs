@@ -5,8 +5,15 @@ namespace DartSharp.Processors
 {
   class ExplodeMocksProcessor : DartProcessor
   {
-    public ExplodeMocksProcessor(IEnumerable<string> files) : base(files)
+    private readonly string outputDirectory = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/mock_files";
+    public ExplodeMocksProcessor(IEnumerable<string> files) : base(files) { }
+    public ExplodeMocksProcessor(IEnumerable<string> files, string? outputDirectory) : this(files)
     {
+      if (outputDirectory != null)
+      {
+        this.outputDirectory = outputDirectory;
+        Directory.CreateDirectory(this.outputDirectory);
+      }
     }
 
     public override void Process()
@@ -15,15 +22,12 @@ namespace DartSharp.Processors
 
       Console.WriteLine($"Parsed {results.Count} files...");
 
-      var profile = Environment.SpecialFolder.UserProfile;
-      var home = Environment.GetFolderPath(profile);
-      var mockDir = $"{home}/mock_files";
       foreach (var result in results)
       {
 
         Parallel.ForEach(result.Value, parseResult =>
         {
-          var file = $"{mockDir}/{parseResult.ClassName.ToSnakeCase()}.dart";
+          var file = $"{outputDirectory}/{parseResult.ClassName.ToSnakeCase()}.dart";
           var content = parseResult.Text;
           Console.WriteLine($"Writing to {file}");
 

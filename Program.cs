@@ -1,59 +1,43 @@
+using DartSharp.ArgumentHandling;
 using DartSharp.Processors;
 
 namespace DartSharp
 {
   class Program
   {
+    public static void RegisterFlags()
+    {
+      FlagRegistry.RegisterFlag<ExplodeMocksProcessor>("--explode", "Writes all Mock classes to their own files", usesOutputFlag: true);
+      FlagRegistry.RegisterFlag<ParameterContainerTypeProcessor>("--lint", "WIP: Will analyze a given dart file and notify if there are unused args for any functions");
+      FlagRegistry.RegisterFlag<MockTypeDependenciesProcessor>("--list-mocks", "Print the Mock classes defined in the supplied files");
+      FlagRegistry.RegisterFlag<ListImportsProcessor>("--list-imports", "Print the import statements in the supplied files");
+    }
 
     public static int Main(string[] args)
     {
-      var argParser = new ArgParser();
-      var argResults = argParser.ParseArguments(args);
-      var mode = argResults.Mode;
-      var files = argResults.Files;
-      var verbose = argResults.Verbose;
-
-      if (verbose)
+      RegisterFlags();
+      var resultPayload = CommandLineArgumentHandler.ParseArguments(args);
+      if (resultPayload.ShowHelp)
       {
-        Console.WriteLine("ArgParse Results:");
-        Console.WriteLine($"Mode: {argResults.Mode}");
-        Console.WriteLine($"Files: {argResults.Files.Aggregate("", (x, y) => x + ", " + y)}");
+        FlagRegistry.PrintHelp();
+        return 0;
       }
 
-      if (mode == ProgramMode.PrintHelp)
+      if (resultPayload.Errors.Any())
       {
-        argParser.PrintHelp();
-        return 1;
-      }
-      else if (mode == ProgramMode.Garbage)
-      {
-        Console.WriteLine($"Invalid argument/file: {argResults.Files.First()}");
-        argParser.PrintHelp();
+        foreach (var error in resultPayload.Errors)
+        {
+          Console.WriteLine(error);
+        }
+
+        // print a newline before printing help message to help let error messages stand out more
+        Console.WriteLine();
+        FlagRegistry.PrintHelp();
         return 1;
       }
 
-      DartProcessor? processor = null;
-      switch (mode)
-      {
-        case ProgramMode.ExplodeMocks:
-          processor = new ExplodeMocksProcessor(files);
-          break;
-        case ProgramMode.ArgumentUseLint:
-          // Work in progress
-          processor = new ParameterContainerTypeProcessor(files);
-          break;
-        case ProgramMode.ListMocks:
-          processor = new MockTypeDependenciesProcessor(files);
-          break;
-        case ProgramMode.ListImports:
-          processor = new ListImportsProcessor(files);
-          break;
-        default:
-          break;
-      }
-
+      var processor = resultPayload.Processor;
       processor?.Process();
-
 
       return 0;
     }
