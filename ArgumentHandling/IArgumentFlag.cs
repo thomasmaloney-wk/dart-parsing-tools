@@ -7,6 +7,5 @@ namespace DartSharp.ArgumentHandling
   {
     public string Flag { get; }
     public string Description { get; }
-    public bool IsProcessorFlag { get; }
   }
 }

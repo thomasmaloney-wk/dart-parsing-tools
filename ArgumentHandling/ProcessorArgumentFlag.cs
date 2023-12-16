@@ -9,8 +9,6 @@ namespace DartSharp.ArgumentHandling
     class ProcessorArgumentFlag<TProcessor> : IProcessorArgumentFlag where TProcessor : DartProcessor
     {
         public bool UsesOutputFlag { get; }
-        public Type ProcessorType => typeof(TProcessor);
-        public bool IsProcessorFlag => true;
 
         public string Flag { get; }
 

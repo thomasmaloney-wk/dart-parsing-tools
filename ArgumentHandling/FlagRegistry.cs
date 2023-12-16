@@ -17,8 +17,6 @@ namespace DartSharp.ArgumentHandling
         public static Dictionary<string, GenericArgumentFlag> GenericFlagByFlagName => GenericFlags.ToDictionary(key => key.Flag, value => value);
         public static Dictionary<string, IProcessorArgumentFlag> ProcessorFlagByFlagName => ProcessorFlags.ToDictionary(key => key.Flag, value => value);
 
-        public static IEnumerable<IArgumentFlag> Flags => ProcessorFlags.Select(flag => flag as IArgumentFlag).Union(GenericFlags);
-
         public static void RegisterFlag<TProcessor>(string flag, string desc, bool usesOutputFlag = false) where TProcessor : DartProcessor
         {
             ProcessorFlags.Add(new ProcessorArgumentFlag<TProcessor>(flag, desc, usesOutputFlag: usesOutputFlag));

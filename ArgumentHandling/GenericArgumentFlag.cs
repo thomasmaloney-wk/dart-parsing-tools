@@ -7,7 +7,6 @@ namespace DartSharp.ArgumentHandling
   class GenericArgumentFlag : IArgumentFlag
   {
     public int ParameterCount { get; }
-    public bool IsProcessorFlag => false;
 
     public string Flag { get; }
 
