@@ -7,7 +7,7 @@ namespace DartSharp
   {
     public static void RegisterFlags()
     {
-      FlagRegistry.RegisterFlag<ExplodeMocksProcessor>("--explode", "Writes all Mock classes to their own files");
+      FlagRegistry.RegisterFlag<ExplodeMocksProcessor>("--explode", "Writes all Mock classes to their own files", usesOutputFlag: true);
       FlagRegistry.RegisterFlag<ParameterContainerTypeProcessor>("--lint", "WIP: Will analyze a given dart file and notify if there are unused args for any functions");
       FlagRegistry.RegisterFlag<MockTypeDependenciesProcessor>("--list-mocks", "Print the Mock classes defined in the supplied files");
       FlagRegistry.RegisterFlag<ListImportsProcessor>("--list-imports", "Print the import statements in the supplied files");
