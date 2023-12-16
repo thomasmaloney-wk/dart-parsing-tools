@@ -26,10 +26,14 @@ For example, if you have a file that contains a bunch of Dart mock class definit
 ```bash
 dotnet run ~/some_dart_project/mocks.dart --explode
 ```
-
 And the program will create a directory `~/mock_files/` and write each mock class to its own file in there.
 
-Note: I'll add a way to specify an output directory probably very soon.
+If you'd like to specify an output directory for the mock files to be written to, you can do so by using the `-o` flag:
+
+```bash
+dotnet run ~/some_dart_project/mocks.dart --explode -o ~/some/other/directory
+```
+
 
 ## Disclaimer
 I wasn't initially expecting to put this on github and so documentation around using it or what each part does is not currently in an ideal state.
