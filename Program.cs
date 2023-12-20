@@ -11,6 +11,7 @@ namespace DartSharp
       FlagRegistry.RegisterFlag<ParameterContainerTypeProcessor>("--lint", "WIP: Will analyze a given dart file and notify if there are unused args for any functions");
       FlagRegistry.RegisterFlag<MockTypeDependenciesProcessor>("--list-mocks", "Print the Mock classes defined in the supplied files");
       FlagRegistry.RegisterFlag<ListImportsProcessor>("--list-imports", "Print the import statements in the supplied files");
+      FlagRegistry.RegisterFlag<PublicEndpointsProcessor>("--list-endpoints", "Prints the public endpoints in a dart file");
     }
 
     public static int Main(string[] args)
